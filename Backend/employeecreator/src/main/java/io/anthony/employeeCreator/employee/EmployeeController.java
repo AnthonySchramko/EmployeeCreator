@@ -16,13 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import exceptions.NotFoundException;
+import io.anthony.employeeCreator.contract.ContractUpdateDTO;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/")
 public class EmployeeController {
+	private final IEmployeeService employeeService;
 	@Autowired
-	private EmployeeService employeeService;
+    public EmployeeController(IEmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 	
 
 	@GetMapping
@@ -41,8 +45,8 @@ public class EmployeeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Employee> createEmployee(@Valid @RequestBody EmployeeCreateDTO data){
-		Employee newEmployee = this.employeeService.createEmployee(data);
+	public ResponseEntity<Employee> createEmployee(@Valid @RequestBody CreateRequestDTO requestDTO){
+		Employee newEmployee = this.employeeService.createEmployee(requestDTO.getEmployeeDTO(), requestDTO.getContractDTO());
 		return new ResponseEntity<Employee>(newEmployee, HttpStatus.CREATED);
 		
 	}
@@ -57,9 +61,9 @@ public class EmployeeController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<?> updateById(@PathVariable Long id, @Valid @RequestBody EmployeeUpdateDTO data){
+	public ResponseEntity<?> updateById(@PathVariable Long id, @Valid @RequestBody UpdateRequestDTO requestDTO){
 		
-		Optional<Employee> updated = this.employeeService.updateById(id,data);
+		Optional<Employee> updated = this.employeeService.updateById(id, requestDTO.getEmployeeDTO(), requestDTO.getContractDTO());
 			
 		if(updated.isPresent()) {
 			return new ResponseEntity<Employee>(updated.get(),HttpStatus.OK);

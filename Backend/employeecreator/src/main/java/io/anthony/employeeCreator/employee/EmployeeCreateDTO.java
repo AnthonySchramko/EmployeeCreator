@@ -20,7 +20,7 @@ public class EmployeeCreateDTO {
 	private String email;
 	
 	@NotBlank(message = "Phone number cannot be blank")
-	private String phoneNumber;
+	private String mobile;
 	
 	@NotBlank(message = "Address cannot be blank")
 	private String address;
