@@ -1,13 +1,11 @@
 import { Employee } from "../../schema/employee";
 import { useNavigate } from "react-router-dom";
 import styles from "./Card.module.scss";
-import { employeeUtils } from "../../services/employee-utils";
 
 interface Props {
   employee: Employee;
 }
 const Card = ({ employee }: Props) => {
-  const handleDelete = employee.id;
   const navigate = useNavigate();
 
   return (

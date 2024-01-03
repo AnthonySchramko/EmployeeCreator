@@ -12,10 +12,10 @@ export class employeeUtils {
     return response.data;
   }
 
-  public static async deleteEmployeeById(id: number): Promise<Employee> {
-    const response = await instance.delete(`/{id}`);
-    return response.data;
-  }
+  // public static async deleteEmployeeById(id: number): Promise<Employee> {
+  //   const response = await instance.delete(`/{id}`);
+  //   return response.data;
+  // }
 
   public static async updateEmployeeById(
     id: number,

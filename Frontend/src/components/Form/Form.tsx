@@ -4,12 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.scss";
-
-export interface FormProps {
-  formSubmit: (e: any) => any;
-}
+import { employeeUtils } from "../../services/employee-utils";
 interface FormData {
-  employee: {
+  employeeDTO: {
     firstName: string;
     middleName?: string;
     lastName: string;
@@ -17,7 +14,8 @@ interface FormData {
     mobile: string;
     address: string;
   };
-  contract: {
+  contractDTO: {
+    contractType: boolean;
     startDate: string;
     endDate: string;
     ongoing: boolean;
@@ -25,7 +23,8 @@ interface FormData {
     hours: string;
   };
 }
-const Form: React.FC<FormProps> = ({ formSubmit }) => {
+const Form = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -33,90 +32,111 @@ const Form: React.FC<FormProps> = ({ formSubmit }) => {
   } = useForm<FormData>({
     resolver: zodResolver(
       z.object({
-        employee: employeeSchema,
-        contract: contractSchema,
+        employeeDTO: employeeSchema,
+        contractDTO: contractSchema,
       })
     ),
   });
-  const navigate = useNavigate();
+  const formSubmit: SubmitHandler<FormData> = (data) => {
+    employeeUtils.createEmployee(data);
+    console.log(data);
+  };
+
   return (
     <form onSubmit={handleSubmit(formSubmit)} className={styles.container}>
       <label>
         First Name
-        <input {...register("employee.firstName")} />
-        {errors?.employee?.firstName && (
-          <p>{errors.employee.firstName.message}</p>
+        <input {...register("employeeDTO.firstName")} />
+        {errors?.employeeDTO?.firstName && (
+          <p>{errors.employeeDTO.firstName.message}</p>
         )}
       </label>
 
       <label>
         Middle Name (if applicable)
-        <input {...register("employee.middleName")} />
-        {errors?.employee?.middleName && (
-          <p>{errors.employee.middleName.message}</p>
+        <input {...register("employeeDTO.middleName")} />
+        {errors?.employeeDTO?.middleName && (
+          <p>{errors.employeeDTO.middleName.message}</p>
         )}
       </label>
 
       <label>
         Last Name
-        <input {...register("employee.lastName")} />
-        {errors?.employee?.lastName && (
-          <p>{errors.employee.lastName.message}</p>
+        <input {...register("employeeDTO.lastName")} />
+        {errors?.employeeDTO?.lastName && (
+          <p>{errors.employeeDTO.lastName.message}</p>
         )}
       </label>
       <h3>Contact details</h3>
       <label>
         Email
-        <input {...register("employee.email")} />
-        {errors?.employee?.email && <p>{errors.employee.email.message}</p>}
+        <input {...register("employeeDTO.email")} />
+        {errors?.employeeDTO?.email && (
+          <p>{errors.employeeDTO.email.message}</p>
+        )}
       </label>
 
       <label>
         Mobile
         <h5>Must be an Australian number</h5>
-        <input {...register("employee.mobile")} />
-        {errors?.employee?.mobile && <p>{errors.employee.mobile.message}</p>}
+        <input {...register("employeeDTO.mobile")} />
+        {errors?.employeeDTO?.mobile && (
+          <p>{errors.employeeDTO.mobile.message}</p>
+        )}
       </label>
 
       <label>
         Address:
-        <input {...register("employee.address")} />
-        {errors?.employee?.address && <p>{errors.employee.address.message}</p>}
+        <input {...register("employeeDTO.address")} />
+        {errors?.employeeDTO?.address && (
+          <p>{errors.employeeDTO.address.message}</p>
+        )}
       </label>
       <label>
-        Ongoing:
-        <input {...register("contract.ongoing")} type="checkbox" />
+        Contract Type:
+        <input {...register("contractDTO.contractType")} type="checkbox" />
+        {errors?.contractDTO?.contractType && (
+          <p>{errors?.contractDTO?.contractType.message}</p>
+        )}
       </label>
       <label>
         Start Date:
-        <input {...register("contract.startDate")} type="date" />
-        {errors?.contract?.startDate && (
-          <p>{errors?.contract?.startDate.message}</p>
+        <input {...register("contractDTO.startDate")} type="date" />
+        {errors?.contractDTO?.startDate && (
+          <p>{errors?.contractDTO?.startDate.message}</p>
         )}
       </label>
 
       <label>
         End Date:
-        <input {...register("contract.endDate")} type="date" />
-        {errors?.contract?.endDate && (
-          <p>{errors?.contract?.endDate.message}</p>
+        <input {...register("contractDTO.endDate")} type="date" />
+        {errors?.contractDTO?.endDate && (
+          <p>{errors?.contractDTO?.endDate.message}</p>
         )}
       </label>
 
       <label>
         Ongoing:
-        <input {...register("contract.ongoing")} type="checkbox" />
+        <input {...register("contractDTO.ongoing")} type="checkbox" />
+        {errors?.contractDTO?.ongoing && (
+          <p>{errors?.contractDTO?.ongoing.message}</p>
+        )}
       </label>
 
       <label>
         Full Time:
-        <input {...register("contract.fullTime")} type="checkbox" />
+        <input {...register("contractDTO.fullTime")} type="checkbox" />
+        {errors?.contractDTO?.fullTime && (
+          <p>{errors?.contractDTO?.fullTime.message}</p>
+        )}
       </label>
 
       <label>
         Hours:
-        <input {...register("contract.hours")} type="number" />
-        {errors?.contract?.hours && <p>{errors?.contract?.hours.message}</p>}
+        <input {...register("contractDTO.hours")} type="number" />
+        {errors?.contractDTO?.hours && (
+          <p>{errors?.contractDTO?.hours.message}</p>
+        )}
       </label>
       <button type="submit">Submit</button>
       <button type="button" onClick={() => navigate(`/`)}>

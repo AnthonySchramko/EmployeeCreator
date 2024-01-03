@@ -9,10 +9,11 @@ export const employeeSchema = z.object({
   address: z.string().min(1, { message: "Home Address is required" }),
 });
 export const contractSchema = z.object({
+  // contractType: z.boolean(),
   startDate: z.string(),
   endDate: z.string(),
-  ongoing: z.boolean(),
-  fullTime: z.boolean(),
+  // ongoing: z.boolean(),
+  // fullTime: z.boolean(),
   hours: z.string(),
 });
 
