@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import exceptions.NotFoundException;
-import io.anthony.employeeCreator.contract.ContractUpdateDTO;
 import jakarta.validation.Valid;
 
 @RestController
