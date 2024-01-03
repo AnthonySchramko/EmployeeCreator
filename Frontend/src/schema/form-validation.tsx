@@ -9,12 +9,16 @@ export const employeeSchema = z.object({
   address: z.string().min(1, { message: "Home Address is required" }),
 });
 export const contractSchema = z.object({
-  // contractType: z.boolean(),
+  contractType: z
+    .string()
+    .min(1, { message: "Contract type must be true or false" }),
   startDate: z.string(),
   endDate: z.string(),
-  // ongoing: z.boolean(),
-  // fullTime: z.boolean(),
-  hours: z.string(),
+  ongoing: z.boolean(),
+  fullTime: z
+    .string()
+    .min(1, { message: "Must state if full-time or part-time" }),
+  hours: z.string().min(1, { message: "Hours worked is required" }),
 });
 
 export type EmployeeFormData = z.infer<typeof employeeSchema>;

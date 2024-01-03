@@ -5,7 +5,8 @@ import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.scss";
 import { employeeUtils } from "../../services/employee-utils";
-interface FormData {
+import { Employee } from "../../schema/employee";
+export interface FormData {
   employeeDTO: {
     firstName: string;
     middleName?: string;
@@ -15,15 +16,19 @@ interface FormData {
     address: string;
   };
   contractDTO: {
-    contractType: boolean;
+    contractType: string;
     startDate: string;
     endDate: string;
     ongoing: boolean;
-    fullTime: boolean;
+    fullTime: string;
     hours: string;
   };
 }
-const Form = () => {
+interface FormProps {
+  defaultValues: FormData;
+  onSubmit: SubmitHandler<FormData>;
+}
+const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
   const navigate = useNavigate();
   const {
     register,
@@ -36,12 +41,11 @@ const Form = () => {
         contractDTO: contractSchema,
       })
     ),
+    defaultValues,
   });
-  const formSubmit: SubmitHandler<FormData> = (data) => {
-    employeeUtils.createEmployee(data);
-    console.log(data);
+  const formSubmit: SubmitHandler<FormData> = (data: FormData) => {
+    onSubmit(data);
   };
-
   return (
     <form onSubmit={handleSubmit(formSubmit)} className={styles.container}>
       <label>
@@ -51,7 +55,6 @@ const Form = () => {
           <p>{errors.employeeDTO.firstName.message}</p>
         )}
       </label>
-
       <label>
         Middle Name (if applicable)
         <input {...register("employeeDTO.middleName")} />
@@ -59,7 +62,6 @@ const Form = () => {
           <p>{errors.employeeDTO.middleName.message}</p>
         )}
       </label>
-
       <label>
         Last Name
         <input {...register("employeeDTO.lastName")} />
@@ -75,7 +77,6 @@ const Form = () => {
           <p>{errors.employeeDTO.email.message}</p>
         )}
       </label>
-
       <label>
         Mobile
         <h5>Must be an Australian number</h5>
@@ -84,7 +85,6 @@ const Form = () => {
           <p>{errors.employeeDTO.mobile.message}</p>
         )}
       </label>
-
       <label>
         Address:
         <input {...register("employeeDTO.address")} />
@@ -94,7 +94,24 @@ const Form = () => {
       </label>
       <label>
         Contract Type:
-        <input {...register("contractDTO.contractType")} type="checkbox" />
+        <div>
+          <label>
+            <input
+              {...register("contractDTO.contractType")}
+              type="radio"
+              value="true"
+            />
+            Permanent
+          </label>
+          <label>
+            <input
+              {...register("contractDTO.contractType")}
+              type="radio"
+              value="false"
+            />
+            Contract
+          </label>
+        </div>
         {errors?.contractDTO?.contractType && (
           <p>{errors?.contractDTO?.contractType.message}</p>
         )}
@@ -106,7 +123,6 @@ const Form = () => {
           <p>{errors?.contractDTO?.startDate.message}</p>
         )}
       </label>
-
       <label>
         End Date:
         <input {...register("contractDTO.endDate")} type="date" />
@@ -114,23 +130,43 @@ const Form = () => {
           <p>{errors?.contractDTO?.endDate.message}</p>
         )}
       </label>
-
       <label>
         Ongoing:
-        <input {...register("contractDTO.ongoing")} type="checkbox" />
+        <div>
+          <label>
+            <input {...register("contractDTO.ongoing")} type="checkbox" />
+            Ongoing
+          </label>
+        </div>
         {errors?.contractDTO?.ongoing && (
           <p>{errors?.contractDTO?.ongoing.message}</p>
         )}
       </label>
-
       <label>
         Full Time:
-        <input {...register("contractDTO.fullTime")} type="checkbox" />
+        <div>
+          <label>
+            <input
+              {...register("contractDTO.fullTime")}
+              type="radio"
+              value="true"
+              defaultChecked={true}
+            />
+            Full-time
+          </label>
+          <label>
+            <input
+              {...register("contractDTO.fullTime")}
+              type="radio"
+              value="false"
+            />
+            Part-time
+          </label>
+        </div>
         {errors?.contractDTO?.fullTime && (
           <p>{errors?.contractDTO?.fullTime.message}</p>
         )}
       </label>
-
       <label>
         Hours:
         <input {...register("contractDTO.hours")} type="number" />

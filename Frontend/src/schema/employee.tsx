@@ -1,7 +1,7 @@
 export interface Employee {
   id: number;
   firstName: string;
-  middleName: string | null;
+  middleName?: string;
   lastName: string;
   email: string;
   mobile: string;
@@ -10,10 +10,10 @@ export interface Employee {
 }
 export interface Contract {
   id: number;
-  contractType: boolean;
+  contractType: string;
   startDate: string;
   endDate: string;
   ongoing: boolean;
-  fullTime: boolean;
+  fullTime: string;
   hours: string;
 }
