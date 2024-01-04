@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 
 public class ContractUpdateDTO {
-	private boolean contractType;
+	private String contractType;
 	
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private LocalDate startDate;
@@ -19,9 +19,9 @@ public class ContractUpdateDTO {
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private LocalDate endDate;
 	
-	private boolean ongoing;
+	private String ongoing;
 	
-	private boolean fullTime;
+	private String fullTime;
 	
 	private int hours;
 	

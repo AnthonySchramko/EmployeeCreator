@@ -20,15 +20,23 @@ const EmployeeContainer = () => {
       })
       .finally(() => setLoading(false));
   }, []);
-
+  const handleDelete = (id: number) => {
+    try {
+      setEmployeeList((prevEmployeeList) =>
+        prevEmployeeList.filter((employee) => employee.id !== id)
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
   return (
     <div className={styles.container}>
       {loading && <p> Loading...</p>}
-      {!loading &&
-        employeeList &&
-        employeeList.map((employee: Employee) => {
-          return <Card key={employee.id} employee={employee} />;
-        })}
+      {employeeList.map((employee: Employee) => {
+        return (
+          <Card key={employee.id} employee={employee} onDelete={handleDelete} />
+        );
+      })}
     </div>
   );
 };

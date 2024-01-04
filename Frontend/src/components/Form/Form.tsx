@@ -4,8 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.scss";
-import { employeeUtils } from "../../services/employee-utils";
-import { Employee } from "../../schema/employee";
 export interface FormData {
   employeeDTO: {
     firstName: string;
@@ -48,103 +46,144 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
   };
   return (
     <form onSubmit={handleSubmit(formSubmit)} className={styles.container}>
-      <label>
-        First Name
-        <input {...register("employeeDTO.firstName")} />
-        {errors?.employeeDTO?.firstName && (
-          <p>{errors.employeeDTO.firstName.message}</p>
-        )}
-      </label>
-      <label>
-        Middle Name (if applicable)
-        <input {...register("employeeDTO.middleName")} />
-        {errors?.employeeDTO?.middleName && (
-          <p>{errors.employeeDTO.middleName.message}</p>
-        )}
-      </label>
-      <label>
-        Last Name
-        <input {...register("employeeDTO.lastName")} />
-        {errors?.employeeDTO?.lastName && (
-          <p>{errors.employeeDTO.lastName.message}</p>
-        )}
-      </label>
-      <h3>Contact details</h3>
+      <h2>Personal Information</h2>
+      <div>
+        <label>
+          First Name
+          <div>
+            <input
+              {...register("employeeDTO.firstName")}
+              className={styles.input__personal}
+            />{" "}
+            {errors?.employeeDTO?.firstName && (
+              <span>{errors.employeeDTO.firstName.message}</span>
+            )}
+          </div>
+        </label>
+        <label>
+          Middle Name (if applicable)
+          <div>
+            <input
+              {...register("employeeDTO.middleName")}
+              className={styles.input__personal}
+            />
+            {errors?.employeeDTO?.middleName && (
+              <span>{errors.employeeDTO.middleName.message}</span>
+            )}
+          </div>
+        </label>
+        <label>
+          Last Name
+          <div>
+            <input
+              {...register("employeeDTO.lastName")}
+              className={styles.input__personal}
+            />
+            {errors?.employeeDTO?.lastName && (
+              <span>{errors.employeeDTO.lastName.message}</span>
+            )}
+          </div>
+        </label>
+      </div>
+
+      <h2>Contact details</h2>
       <label>
         Email
-        <input {...register("employeeDTO.email")} />
-        {errors?.employeeDTO?.email && (
-          <p>{errors.employeeDTO.email.message}</p>
-        )}
+        <div>
+          <input
+            {...register("employeeDTO.email")}
+            className={styles.input__contact__email}
+          />
+          {errors?.employeeDTO?.email && (
+            <span>{errors.employeeDTO.email.message}</span>
+          )}
+        </div>
       </label>
       <label>
         Mobile
-        <h5>Must be an Australian number</h5>
-        <input {...register("employeeDTO.mobile")} />
-        {errors?.employeeDTO?.mobile && (
-          <p>{errors.employeeDTO.mobile.message}</p>
-        )}
-      </label>
-      <label>
-        Address:
-        <input {...register("employeeDTO.address")} />
-        {errors?.employeeDTO?.address && (
-          <p>{errors.employeeDTO.address.message}</p>
-        )}
-      </label>
-      <label>
-        Contract Type:
+        <p className={styles.subtext}>Must be an Australian number</p>
         <div>
-          <label>
-            <input
-              {...register("contractDTO.contractType")}
-              type="radio"
-              value="true"
-            />
-            Permanent
-          </label>
-          <label>
-            <input
-              {...register("contractDTO.contractType")}
-              type="radio"
-              value="false"
-            />
-            Contract
-          </label>
+          <input
+            {...register("employeeDTO.mobile")}
+            className={styles.input__contact__mobile}
+          />
+          {errors?.employeeDTO?.mobile && (
+            <span>{errors.employeeDTO.mobile.message}</span>
+          )}
         </div>
-        {errors?.contractDTO?.contractType && (
-          <p>{errors?.contractDTO?.contractType.message}</p>
-        )}
       </label>
+      <label>
+        Residential Address:
+        <div>
+          <input
+            {...register("employeeDTO.address")}
+            className={styles.input__contact__address}
+          />
+          {errors?.employeeDTO?.address && (
+            <span>{errors.employeeDTO.address.message}</span>
+          )}
+        </div>
+      </label>
+      <h2>Employee Status</h2>
+      <div>
+        <label>
+          What is contract type?
+          <div className={styles.input__status__type}>
+            <label>
+              <input
+                {...register("contractDTO.contractType")}
+                type="radio"
+                value="true"
+              />
+              Permanent
+            </label>
+            <label>
+              <input
+                {...register("contractDTO.contractType")}
+                type="radio"
+                value="false"
+              />
+              Contract
+            </label>
+          </div>
+          {errors?.contractDTO?.contractType && (
+            <span>{errors?.contractDTO?.contractType.message}</span>
+          )}
+        </label>
+      </div>
+
       <label>
         Start Date:
-        <input {...register("contractDTO.startDate")} type="date" />
-        {errors?.contractDTO?.startDate && (
-          <p>{errors?.contractDTO?.startDate.message}</p>
-        )}
-      </label>
-      <label>
-        End Date:
-        <input {...register("contractDTO.endDate")} type="date" />
-        {errors?.contractDTO?.endDate && (
-          <p>{errors?.contractDTO?.endDate.message}</p>
-        )}
-      </label>
-      <label>
-        Ongoing:
         <div>
-          <label>
+          <input {...register("contractDTO.startDate")} type="date" />
+          {errors?.contractDTO?.startDate && (
+            <span>{errors?.contractDTO?.startDate.message}</span>
+          )}
+        </div>
+      </label>
+      <label>
+        Finish Date:
+        <div>
+          <input {...register("contractDTO.endDate")} type="date" />
+          {errors?.contractDTO?.endDate && (
+            <span>{errors?.contractDTO?.endDate.message}</span>
+          )}
+        </div>
+      </label>
+      <label>
+        <div>
+          <label className={styles.input__status__ongoing}>
             <input {...register("contractDTO.ongoing")} type="checkbox" />
             Ongoing
           </label>
         </div>
         {errors?.contractDTO?.ongoing && (
-          <p>{errors?.contractDTO?.ongoing.message}</p>
+          <span>{errors?.contractDTO?.ongoing.message}</span>
         )}
       </label>
       <label>
-        Full Time:
-        <div>
+        Is this on a full-time or part-time basis?
+        <div className={styles.input__status__fullTime}>
           <label>
             <input
               {...register("contractDTO.fullTime")}
@@ -164,20 +203,34 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
           </label>
         </div>
         {errors?.contractDTO?.fullTime && (
-          <p>{errors?.contractDTO?.fullTime.message}</p>
+          <span>{errors?.contractDTO?.fullTime.message}</span>
         )}
       </label>
       <label>
-        Hours:
-        <input {...register("contractDTO.hours")} type="number" />
-        {errors?.contractDTO?.hours && (
-          <p>{errors?.contractDTO?.hours.message}</p>
-        )}
+        Hours per week
+        <div>
+          <input
+            {...register("contractDTO.hours")}
+            type="number"
+            className={styles.input__status__hours}
+          />
+          {errors?.contractDTO?.hours && (
+            <span>{errors?.contractDTO?.hours.message}</span>
+          )}
+        </div>
       </label>
-      <button type="submit">Submit</button>
-      <button type="button" onClick={() => navigate(`/`)}>
-        Cancel
-      </button>
+      <div className={styles.btn__wrapper}>
+        <button type="submit" className={styles.btn__save}>
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate(`/`)}
+          className={styles.btn}
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };

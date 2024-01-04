@@ -22,7 +22,6 @@ import jakarta.validation.Valid;
 @RequestMapping("/")
 public class EmployeeController {
 	private final IEmployeeService employeeService;
-	@Autowired
     public EmployeeController(IEmployeeService employeeService) {
         this.employeeService = employeeService;
     }

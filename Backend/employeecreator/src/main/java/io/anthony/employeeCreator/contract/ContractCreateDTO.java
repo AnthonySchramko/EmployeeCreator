@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 
 public class ContractCreateDTO {
-	private boolean contractType;
+	private String contractType;
 	
 	@NotNull(message = "Must have a start date")
     @DateTimeFormat(pattern = "yyyy-mm-dd")
@@ -22,9 +22,9 @@ public class ContractCreateDTO {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
 	private LocalDate endDate;
 	
-	private boolean ongoing;
+	private String ongoing;
 	
-	private boolean fullTime;
+	private String fullTime;
 	
 	@NotNull(message = "Hours cannot be blank")
 	private int hours;

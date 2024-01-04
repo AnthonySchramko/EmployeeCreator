@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import Form, { FormData } from "../../components/Form/Form";
-import { useParams } from "react-router-dom";
-import {
-  convertFormDataToEmployee,
-  employeeUtils,
-} from "../../services/employee-utils";
+import { useNavigate, useParams } from "react-router-dom";
+import { employeeUtils } from "../../services/employee-utils";
 import { Employee } from "../../schema/employee";
-
+import Header from "../../components/Header/Header";
+import styles from "./EmployeeDetails.module.scss";
 const EmployeeDetails = () => {
   const [currentEmployee, setCurrentEmployee] = useState<Employee>();
   const { id } = useParams();
   const idAsNum = id ? parseInt(id) : undefined;
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,15 +22,21 @@ const EmployeeDetails = () => {
     fetchData();
   }, [idAsNum]);
   const handleUpdateEmployee = (data: FormData) => {
-    const employeeData = convertFormDataToEmployee(data, idAsNum);
     try {
-      employeeUtils.updateEmployeeById(idAsNum, employeeData);
+      console.log(data);
+      employeeUtils.updateEmployeeById(idAsNum, data);
     } catch (e) {
       console.error(e);
+    } finally {
+      navigate(`/`);
     }
   };
   return (
     <div>
+      <button onClick={() => navigate(`/`)} className={styles.btn}>
+        &lt; Back
+      </button>
+      <Header text={"Employee Details"} />
       {currentEmployee !== undefined ? (
         <Form
           defaultValues={{

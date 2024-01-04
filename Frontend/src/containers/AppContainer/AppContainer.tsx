@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import HomePage from "../../pages/HomePage/HomePage";
@@ -9,7 +8,6 @@ const AppContainer = () => {
   return (
     <div>
       <BrowserRouter>
-        <Header />
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />

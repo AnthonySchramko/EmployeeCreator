@@ -1,6 +1,104 @@
-p {
-  color: red;
-}
 .container {
   background-color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 2vh 10vw;
+  display: flex;
+  flex-direction: column;
+  color: rgb(54, 54, 54);
+}
+h2 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 2em;
+  color: black;
+}
+.btn {
+  border: rgba(208, 208, 208, 255) 1px solid;
+  margin: 10px 10px 10px 0;
+  border-radius: 5px;
+  background-color: rgba(247, 247, 247, 255);
+  width: 10em;
+  &__save {
+    background-color: rgba(46, 82, 153, 255);
+    border-radius: 5px;
+    margin: 10px 10px 10px 0;
+    color: white;
+    border: none;
+    height: 40px;
+    width: 10em;
+  }
+  &__wrapper {
+    width: 50vw;
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+.input {
+  border-radius: 5px;
+  &__personal {
+    width: 20em;
+    height: 20px;
+    border-radius: 5px;
+  }
+  &__contact {
+    &__email {
+      width: 25em;
+      height: 20px;
+      border-radius: 5px;
+    }
+    &__mobile {
+      width: 10em;
+      height: 20px;
+      border-radius: 5px;
+    }
+    &__address {
+      width: 35em;
+      height: 20px;
+      border-radius: 5px;
+    }
+  }
+  &__status {
+    &__type {
+      display: flex;
+      flex-direction: column;
+      input {
+        width: 1.5em;
+        height: 1.5em;
+        margin-right: 1em;
+      }
+    }
+    &__ongoing {
+      input {
+        width: 1.5em;
+        height: 1.5em;
+        margin-right: 1em;
+      }
+    }
+    &__fullTime {
+      display: flex;
+      flex-direction: column;
+      input {
+        width: 1.5em;
+        height: 1.5em;
+        margin-right: 1em;
+      }
+    }
+    &__hours {
+      display: flex;
+      flex-direction: column;
+      border-radius: 5px;
+      height: 3em;
+      width: 6em;
+      text-align: center;
+    }
+  }
+}
+label {
+  font-weight: 700;
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+}
+.subtext {
+  font-size: 10px;
+  font-weight: 300;
+  margin: 0;
 }
