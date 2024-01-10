@@ -15,5 +15,5 @@ export interface Contract {
   endDate: string;
   ongoing: boolean;
   fullTime: string;
-  hours: string;
+  hours: number;
 }

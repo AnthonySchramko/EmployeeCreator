@@ -19,7 +19,7 @@ export interface FormData {
     endDate: string;
     ongoing: boolean;
     fullTime: string;
-    hours: string;
+    hours: number;
   };
 }
 interface FormProps {
@@ -31,6 +31,7 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(
@@ -43,6 +44,9 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
   });
   const formSubmit: SubmitHandler<FormData> = (data: FormData) => {
     onSubmit(data);
+  };
+  const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue("contractDTO.ongoing", e.target.checked);
   };
   return (
     <form onSubmit={handleSubmit(formSubmit)} className={styles.container}>
@@ -134,6 +138,10 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
                 {...register("contractDTO.contractType")}
                 type="radio"
                 value="true"
+                defaultChecked={
+                  defaultValues &&
+                  defaultValues.contractDTO.contractType === "true"
+                }
               />
               Permanent
             </label>
@@ -142,6 +150,10 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
                 {...register("contractDTO.contractType")}
                 type="radio"
                 value="false"
+                defaultChecked={
+                  defaultValues &&
+                  defaultValues.contractDTO.contractType === "false"
+                }
               />
               Contract
             </label>
@@ -173,7 +185,14 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
       <label>
         <div>
           <label className={styles.input__status__ongoing}>
-            <input {...register("contractDTO.ongoing")} type="checkbox" />
+            <input
+              {...register("contractDTO.ongoing")}
+              type="checkbox"
+              defaultChecked={
+                defaultValues && defaultValues.contractDTO.ongoing
+              }
+              onChange={handleCheckbox}
+            />
             Ongoing
           </label>
         </div>
@@ -189,7 +208,9 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
               {...register("contractDTO.fullTime")}
               type="radio"
               value="true"
-              defaultChecked={true}
+              defaultChecked={
+                defaultValues && defaultValues.contractDTO.fullTime === "true"
+              }
             />
             Full-time
           </label>
@@ -198,6 +219,9 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
               {...register("contractDTO.fullTime")}
               type="radio"
               value="false"
+              defaultChecked={
+                defaultValues && defaultValues.contractDTO.fullTime === "true"
+              }
             />
             Part-time
           </label>
@@ -210,7 +234,9 @@ const Form: React.FC<FormProps> = ({ defaultValues, onSubmit }) => {
         Hours per week
         <div>
           <input
-            {...register("contractDTO.hours")}
+            {...register("contractDTO.hours", {
+              setValueAs: (value) => parseFloat(value) || 0,
+            })}
             type="number"
             className={styles.input__status__hours}
           />

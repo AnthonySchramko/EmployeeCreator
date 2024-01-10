@@ -18,7 +18,7 @@ export const contractSchema = z.object({
   fullTime: z
     .string()
     .min(1, { message: "Must state if full-time or part-time" }),
-  hours: z.string().min(1, { message: "Hours worked is required" }),
+  hours: z.number().min(1, { message: "Hours worked is required" }),
 });
 
 export type EmployeeFormData = z.infer<typeof employeeSchema>;

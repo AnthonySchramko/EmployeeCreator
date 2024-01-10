@@ -31,6 +31,7 @@ const EmployeeDetails = () => {
       navigate(`/`);
     }
   };
+  console.log(currentEmployee);
   return (
     <div>
       <button onClick={() => navigate(`/`)} className={styles.btn}>

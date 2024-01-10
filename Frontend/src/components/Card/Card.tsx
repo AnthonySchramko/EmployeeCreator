@@ -2,6 +2,7 @@ import { Employee } from "../../schema/employee";
 import { useNavigate } from "react-router-dom";
 import styles from "./Card.module.scss";
 import { employeeUtils } from "../../services/employee-utils";
+import { dateUtils } from "../../services/date-utils";
 
 interface Props {
   employee: Employee;
@@ -17,6 +18,10 @@ const Card = ({ employee, onDelete }: Props) => {
       console.error(e);
     }
   };
+  const years = dateUtils.convertDateToLength(
+    employee.contract.startDate,
+    employee.contract.endDate
+  );
   return (
     <div className={styles.card}>
       <div>
@@ -27,8 +32,8 @@ const Card = ({ employee, onDelete }: Props) => {
           <p>
             {employee.contract.contractType == "true"
               ? "Permanent"
-              : "Contract"}{" "}
-            - convert date to length here{" "}
+              : "Contract"}
+            - {years}yrs
           </p>
           <p>{employee.email}</p>
         </div>
