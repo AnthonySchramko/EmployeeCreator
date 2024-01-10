@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "../../components/Header/Header";
 import HomePage from "../../pages/HomePage/HomePage";
 import EmployeeDetails from "../../pages/EmployeeDetails/EmployeeDetails";
 import CreateEmployee from "../../pages/CreateEmployee/CreateEmployee";

@@ -41,7 +41,7 @@ const CreateEmployee = () => {
               endDate: "",
               ongoing: false,
               fullTime: "",
-              hours: "",
+              hours: 0,
             },
           }}
           onSubmit={handleCreateEmployee}
