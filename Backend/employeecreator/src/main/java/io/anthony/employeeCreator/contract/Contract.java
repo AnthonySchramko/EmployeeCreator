@@ -42,7 +42,7 @@ public class Contract {
 	@Column
 	@Getter
 	@Setter
-	private String ongoing;
+	private Boolean ongoing;
 	
 	@Column
 	@Getter
@@ -61,7 +61,7 @@ public class Contract {
 	
 	public Contract() {}
 	
-	public Contract(Long id, String contractType, LocalDate startDate, LocalDate endDate, String ongoing, String fullTime, int hours) {
+	public Contract(Long id, String contractType, LocalDate startDate, LocalDate endDate, Boolean ongoing, String fullTime, int hours) {
 		this.id = id;
 		this.contractType = contractType;
 		this.startDate = startDate;
