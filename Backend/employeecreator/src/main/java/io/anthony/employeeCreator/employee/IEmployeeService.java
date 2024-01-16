@@ -43,6 +43,8 @@ public class IEmployeeService implements EmployeeService {
 	public Employee createEmployee(EmployeeCreateDTO employeeDTO, ContractCreateDTO contractDTO) {
 		Employee newEmployee = modelMapper.map(employeeDTO, Employee.class);
 		Contract newContract = modelMapper.map(contractDTO, Contract.class);
+		validateContract(newContract);
+		validateEmployee(newEmployee);
 		newEmployee.setContract(newContract);
 		newContract.setEmployee(newEmployee);
 		Employee created = this.employeeRepository.save(newEmployee);
@@ -80,13 +82,13 @@ public class IEmployeeService implements EmployeeService {
 	}
 	
 	private boolean validateContract(Contract contract) {
-		LocalDate startDate = contract.getStartDate();
-		LocalDate endDate = contract.getEndDate();
-		
-		if(startDate!= null && endDate != null && startDate.isAfter(endDate)) {
-			throw new ValidationException("Start date must be before end date");
-		}
-		return true;
+	    LocalDate startDate = contract.getStartDate();
+	    LocalDate endDate = contract.getEndDate();
+
+	    if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+	        throw new ValidationException("Start date must be before end date");
+	    }
+	    return true;
 	}
 	private boolean validateEmployee(Employee employee) {
 		String mobile = employee.getMobile();
