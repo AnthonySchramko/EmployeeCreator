@@ -13,4 +13,8 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
 	}
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<String> handleValidationException(ValidationException ex){
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }

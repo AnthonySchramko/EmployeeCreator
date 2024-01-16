@@ -33,7 +33,7 @@ const Card = ({ employee, onDelete }: Props) => {
             {employee.contract.contractType == "true"
               ? "Permanent"
               : "Contract"}
-            - {years}
+            : {years}
           </p>
           <p>{employee.email}</p>
         </div>

@@ -5,13 +5,13 @@ export class dateUtils {
     const start = dayjs(startDate);
     const end = dayjs(endDate);
 
-    const yearDifference = end.diff(start, "year");
+    const yearDifference = start.diff(end, "year");
 
     if (yearDifference < 1) {
       const monthDifference = end.diff(start, "month");
       return monthDifference + " months";
     } else {
-      return yearDifference + " years";
+      return yearDifference + " year";
     }
   }
 }
